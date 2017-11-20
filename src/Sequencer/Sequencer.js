@@ -96,6 +96,7 @@ class Sequencer extends React.Component {
 	componentWillUnmount() {
 		Tone.Transport.clear(this.state.repeatId)
 		this.setState({ repeatId: null })
+		this.removeAllScheduledNote('')
 	}
 
 	initialize() {
@@ -141,6 +142,18 @@ class Sequencer extends React.Component {
 			key: null,
 			octave: this.state[stepIndex].octave,
 			}})
+	}
+
+	removeAllScheduledNote(stepIndex) {
+		for(let i=0; i<16; i++){
+			Tone.Transport.clear(this.state[i].id);
+			this.setState({ [i]: {
+				id: null,
+				key: null,
+				octave: this.state[i].octave,
+				}})
+
+		}
 	}
 
 	toggleMode() { this.setState({ octaveMode: !this.state.octaveMode }); }
